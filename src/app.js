@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 
-const { uuid } = require("uuidv4");
+const { uuid, isUuid } = require("uuidv4");
 
 const app = express();
 
@@ -9,6 +9,16 @@ app.use(express.json());
 app.use(cors());
 
 const repositories = [];
+
+function validateRepoId(request, response, next){
+  const { id } = request.params;
+
+  if (!isUuid(id)){
+    return response.status(400).json({message: 'Repository ID is not valid.'});
+  }
+
+  return next();
+}
 
 app.get("/repositories", (request, response) => {
   return response.json(repositories)
@@ -31,7 +41,7 @@ app.post("/repositories", (request, response) => {
   
 });
 
-app.put("/repositories/:id", (request, response) => {
+app.put("/repositories/:id", validateRepoId, (request, response) => {
   const { id } = request.params;
   const {title, url, techs} = request.body;
 
@@ -54,7 +64,7 @@ app.put("/repositories/:id", (request, response) => {
   return response.json(repository);
 });
 
-app.delete("/repositories/:id", (request, response) => {
+app.delete("/repositories/:id", validateRepoId, (request, response) => {
   const { id } = request.params;
 
   const repoIndex = repositories.findIndex(repo => repo.id === id );
@@ -69,7 +79,7 @@ app.delete("/repositories/:id", (request, response) => {
 
 });
 
-app.post("/repositories/:id/like", (request, response) => {
+app.post("/repositories/:id/like", validateRepoId, (request, response) => {
   const { id } = request.params;
 
   const repoIndex = repositories.findIndex(repo => repo.id === id);
