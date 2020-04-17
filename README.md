@@ -1,7 +1,7 @@
 # nodejs-concepts
 Conceitos do Node.js. Desafio da Bootcamp GoStack da Rocketseat.
 
-Este aplication utiliza o framework Express para construção de uma API a fim de demonstrar os conceitos de requisições HTTP e a manipulação de dados sem a necessidade de um banco de dados.
+Esta aplicação utiliza o framework Express para construção de uma API a fim de demonstrar os conceitos de requisições HTTP e a manipulação de dados sem a necessidade de um banco de dados.
 
 ## :information_source: Sobre a API
 
